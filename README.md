@@ -1,4 +1,4 @@
----
+<!--
 sword:
   schema: 1
   name: soft.cpp
@@ -10,7 +10,7 @@ sword:
   build: [ant, cmake]
   ng: [ecore-model]
   apps: []
----
+-->
 
 # soft.cpp
 
