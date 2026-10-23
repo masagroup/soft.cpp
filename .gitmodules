@@ -1,0 +1,4 @@
+[submodule "sw.poney"]
+	path = modules/sw.poney
+	url = https://github.com/masagroup/sw.poney
+	branch = master
