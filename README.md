@@ -1,4 +1,4 @@
----
+<!--
 sword:
   schema: 1
   name: soft.cpp
@@ -10,7 +10,7 @@ sword:
   build: [ant, cmake]
   ng: [ecore-model]
   apps: []
----
+-->
 
 # soft.cpp
 
@@ -272,3 +272,30 @@ No audit document exists. Defects and outdated documentation found by the scan:
 - UNVERIFIED: which versions the unpinned vcpkg ports (`xerces-c`, `boost-*`, `date`, `turtle`) resolve to from the SokaDance `turtle` archive.
 - UNVERIFIED: Xerces defaults for external entities / DTD loading in the vcpkg version used, and whether `XMIResource` overrides `doLoad`; test with a crafted XML before the security plan.
 - UNVERIFIED: whether a Linux build is wanted for the containerised next-gen ecosystem; if so, fix the `URI` / `Uri` casing and the MSVC-only flags, and create a Dockerfile and `docker-compose.yaml` with `prod`/`test`/`pack` profiles.
+
+## Legacy notes
+
+The previous README of the repository (`Readme.md` of `masa/master before 981e44a`), kept in full; its headings are two levels lower.
+
+[![](https://img.shields.io/github/license/masagroup/soft.gen.svg)](https://github.com/masagroup/soft.gen/blob/master/LICENSE)
+![](https://img.shields.io/github/v/release/masagroup/soft.cpp)
+### Soft Cpp #
+
+Soft Cpp is an implementation of the EMF Ecore library in C++. This library is partially generated and referenced by the [Soft Cpp Generator](https://github.com/masagroup/soft.gen)
+ 
+Soft Cpp is part of [Soft](https://github.com/masagroup/soft) project
+
+### Installation #
+Only binary for VC 2019 are released for the moment and are available
+from the [project releases](https://github.com/masagroup/soft.gen/releases) page
+
+### Quick Build #
+Requirements:
+ - [Ant](https://ant.apache.org/)
+ - [Ant Contrib Taks](http://ant-contrib.sourceforge.net/)
+ - [VC 2019](https://visualstudio.microsoft.com/)
+
+Run in VC command line:
+```shell
+ant
+```
