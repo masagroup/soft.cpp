@@ -37,7 +37,3 @@ The build of the repository is described in the [README](README.md#build); the t
 | Publication | `build.xml` has no `<update>`, `<update-gh>` or `<upload>` task, so there is no upload to `file1` or to GitHub release assets from this repo |
 
 Tags `v1.0.0` to `v1.2.4` exist (`v1.0.0`..`v1.2.1` annotated; `v1.2.2`..`v1.2.4` lightweight). The `Readme.md` says binaries (VC 2019) are on the releases page of `soft.gen`. See [cicd](https://github.com/masagroup/cicd) and the ecosystem wiki page [CI/CD pipelines](https://github.com/masagroup/wiki/wiki/cicd-pipelines) for the shared pipelines this repo does not use.
-
-## Known issues and open questions
-
-They are not kept in the repository: see the [private artifact](https://claude.ai/artifact/UfvKmky7e8LwEXf192hQjQ#soft.cpp) that holds them for every page of the wiki.
