@@ -189,7 +189,7 @@ flowchart TB
 - A resource is addressed by a URI (`Uri`); `ResourceURIConverter` and `FileUriHandler` resolve it to a stream. The handler named in the sources is the file one (`FileUriHandler`); the library has no network code.
 - Loading goes through Xerces-C SAX2: `XMLResource::doLoad` (`impl/XMLResource.cpp`) takes a reader from `SaxParserPool` with an empty feature map, and the Xerces includes live in `impl/XMLLoad`, `SaxParserPool` and `XMLInputSource`. Saving uses a custom writer, not Xerces. The sources name these classes but do not describe the calls between `XMLResource`, `XMLLoad`/`XMILoad` and `XMLSave`/`XMISave` (edges inferred from class names, UNVERIFIED); likewise inferred and UNVERIFIED are the edges from `ResourceSet` to `XMLResource`/`XMIResource`, from `ResourceURIConverter` to the file, from the writer to `ResourceURIConverter` and from the EObject tree to `XMLSave`/`XMISave`, and the label "SAX2 callbacks" (the sources say only that loading goes through Xerces-C SAX2). That `XMIResource` reuses the same `doLoad` without overriding it is UNVERIFIED.
 - Cross-resource references follow EMF: containment and opposite references, proxies resolved lazily (`impl/Proxy.hpp`, `Lazy.hpp`), notification chains and content adapters on changes.
-- Two caveats from the scan (no audit exists): `SaxParserPool` holds an unguarded `std::list` of readers and nothing in `ecore/lib/src` synchronises, so the library is not thread-safe; and no `setFeature`, security manager or `XMLUni::fg*` setting exists, so external entity and DTD processing are not explicitly disabled and XXE-style resolution is likely possible on untrusted XML (the exact Xerces defaults of the vcpkg version are UNVERIFIED).
+- Caveat from the scan (no audit exists): `SaxParserPool` holds an unguarded `std::list` of readers and nothing in `ecore/lib/src` synchronises, so the library is not thread-safe.
 
 ### From sources to artifacts
 
@@ -237,7 +237,7 @@ No `<update>` / `<update-gh>` call, no poney macro, no `.gitmodules`, no `FROM m
 
 Used by:
 - [soft](https://github.com/masagroup/soft) (umbrella) mounts this repo as submodule `cpp` (`https://github.com/masagroup/soft.cpp.git`), pinned at `bd217da` (v1.2.4).
-- No SWORD C++ repository (`sw.sword`, `sw.cpplibs`, `directai`, `io.*`) was found linking against `ecore`; see "Open questions".
+- No SWORD C++ repository (`sw.sword`, `sw.cpplibs`, `directai`, `io.*`) was found linking against `ecore`; see the [open questions](https://github.com/masagroup/wiki/wiki/known-issues#soft.cpp).
 
 ### External
 

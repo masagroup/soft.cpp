@@ -22,7 +22,7 @@ sword:
 | **Languages** | C++17, CMake, Apache Ant (`build.xml`), Ecore XMI (test data) |
 | **Build systems** | Ant (`build.xml` at the repository root) · CMake + Ninja / Visual Studio generators · vcpkg (downloaded by Ant). No Docker Compose profile, no Go, no npm |
 
-**[Architecture](ARCHITECTURE.md)** · [Contributing](CONTRIBUTING.md) · [known issues and open questions](https://claude.ai/artifact/UfvKmky7e8LwEXf192hQjQ#soft.cpp) · [repository on GitHub](https://github.com/masagroup/soft.cpp)
+**[Architecture](ARCHITECTURE.md)** · [Contributing](CONTRIBUTING.md) · [known issues and open questions](https://github.com/masagroup/wiki/wiki/known-issues#soft.cpp) · [repository on GitHub](https://github.com/masagroup/soft.cpp)
 
 ## Overview
 
@@ -127,7 +127,7 @@ CMake generators are available as macros (VS 2015/2017/2019/2022 and Ninja, arch
 
 ### Linux (Docker)
 
-Not applicable: no Dockerfile and no compose profile (`prod`/`test`/`pack`) exist. `docker.exe` is used only to run the code generator. The sources are not Linux-ready (see "Known issues").
+Not applicable: no Dockerfile and no compose profile (`prod`/`test`/`pack`) exist. `docker.exe` is used only to run the code generator. The sources are not Linux-ready (see the [known issues](https://github.com/masagroup/wiki/wiki/known-issues#soft.cpp)).
 
 ### CMake (Windows)
 
@@ -181,7 +181,7 @@ No executable is produced by this repository (library, contract, data or tooling
 
 - [Architecture](ARCHITECTURE.md): position in the ecosystem, repository layout, internal structure, how it works (diagrams), dependencies.
 - [Contributing](CONTRIBUTING.md): development environment, Git and Jira workflow, conventions, CI/CD.
-- [Known issues and open questions](https://claude.ai/artifact/UfvKmky7e8LwEXf192hQjQ#soft.cpp): the private artifact that holds them (every page of the wiki).
+- [Known issues and open questions](https://github.com/masagroup/wiki/wiki/known-issues#soft.cpp): the known defects and open points of the repository, kept in the SWORD wiki.
 - Related repositories: [soft](https://github.com/masagroup/soft), [soft.gen](https://github.com/masagroup/soft.gen), [soft.models](https://github.com/masagroup/soft.models).
 - Transverse pages: [Build on Windows](https://github.com/masagroup/wiki/wiki/build-windows), [Build on Linux](https://github.com/masagroup/wiki/wiki/build-linux), [CI/CD pipelines](https://github.com/masagroup/wiki/wiki/cicd-pipelines), [Ecosystem today](https://github.com/masagroup/wiki/wiki/ecosystem-current), [Ecosystem next gen](https://github.com/masagroup/wiki/wiki/ecosystem-nextgen), [Glossary](https://github.com/masagroup/wiki/wiki/glossary).
 - Repository on GitHub: [masagroup/soft.cpp](https://github.com/masagroup/soft.cpp).
