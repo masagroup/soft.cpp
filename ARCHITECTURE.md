@@ -253,3 +253,48 @@ Used by:
 | C++ standard | C++17 (`CMAKE_CXX_STANDARD 17`) | - |
 
 There is no pinned vcpkg baseline: versions follow the head of the `SokaDance/vcpkg` `turtle` archive.
+
+## Interfaces
+
+### Ant targets
+
+None of the targets of `build.xml` has a description; the default target is `all`.
+
+| Target | What it does |
+|---|---|
+| `checksum` | prints the SHA-512 of aria2c, cmake and ninja |
+| `aria2.install`, `cmake.install`, `ninja.install`, `tools.install` | download the tools into `bin/` when the checksum does not match |
+| `vcpkg.install` | download the vcpkg fork and install the ports `boost-test boost-regex date turtle xerces-c` (triplet `x64-windows`) |
+| `configure` | `tools.install,vcpkg.install` |
+| `ecore.version` | rewrites the project version in every `ecore/**/CMakeLists.txt` with `${ecore.version}` |
+| `ecore.generate` | runs the image `masagroup/soft.generator.cpp` on `/models/ecore.ecore` with `-P /pwd/generator.properties -t generateModel -t generateLibraryCMakeSources -t generateTests -t generateTestsCMakeSources -t generateTestsCMakeDependencies` |
+| `ecore.configure.vs2015`, `.vs2017`, `.vs2019`, `.vs2022` | CMake configure with that Visual Studio generator |
+| `ecore.configure.ninja.release`, `.debug`, `ecore.configure.ninja` | CMake and Ninja, `RelWithDebInfo`, `Debug` or both |
+| `ecore.configure` | `ecore.configure.vs2022,ecore.configure.ninja` |
+| `ecore.build.debug`, `.release`, `ecore.build` | `ninja -j <NUMBER_OF_PROCESSORS>` in the Ninja build directories |
+| `ecore.tests.debug`, `.release`, `ecore.tests` | `ctest . --parallel N --output-on-failure --tests-regex .*` |
+| `ecore.install` | `ninja install` in release then debug (prefix `out/cpp/deps`) |
+| `ecore.package` | `ninja package` (CPack ZIP) in release then debug |
+| `ecore.dist` | zips the debug and release CPack zips into `dist/ecore-${ecore.version}-win64.zip` |
+| `ecore` | `ecore.version,ecore.generate,ecore.configure,ecore.build,ecore.tests,ecore.install,ecore.package,ecore.dist` |
+| `library.generate` | the same generator on `/models/library.ecore`, without a `-t` filter |
+| `library.configure.vs2019`, `.vs2022`, `.ninja.release`, `.ninja.debug`, `library.configure` | CMake configure for `library/` |
+| `library.build[.debug\|.release]`, `library.tests[.debug\|.release]` | Ninja build and ctest |
+| `library` | `library.generate,library.configure,library.build,library.tests` |
+| `library.clean` | `git clean -xfd` inside `library/` |
+| `all` | `configure,ecore,library` |
+| `clean` | clears the read-only flag on `out/go/**`, then `git clean -xfd` on the whole repository |
+
+Build directories are `out/cpp/<generator>/<project>/<configuration>`. The CMake generators get `-DCMAKE_INSTALL_PREFIX=${out.dir}/cpp/deps` and `-DVCPKG_ROOT=${vcpkg.dir}`.
+
+### CMake targets
+
+| Directory | Targets |
+|---|---|
+| `ecore/lib` | `ecore` (shared, alias `ecore::shared`, defines `ECORE_EXPORTS`), `ecore.static` (alias `ecore::static`, public define `ECORE_STATIC_LIB`); output name `ecore-vc${MSVC_TOOLSET_VERSION}-mt` (+ `-gd` in Debug); links `XercesC::XercesC Boost::regex date::date`; installs headers, `EcoreTargets.cmake` (namespace `Ecore::`) and `EcoreConfig.cmake`; CPack generator `ZIP` |
+| `ecore/tests` | executable `ecore.tests` (Boost.Test and Turtle, `boost_test_discover_tests` for ctest), data copied from `data/` |
+| `library/` | requires the installed ecore under `${CMAKE_INSTALL_PREFIX}/cmake`; `library/lib` and `library/tests` have generated `CMakeLists.txt` |
+
+### Test executables
+
+`ecore.tests` (`ecore/tests/src/main.cpp`) is the Boost.Test suite of the ecore library; `library.tests` (`library/tests/src/main.cpp`) tests the generated sample `library` model against `library/tests/data/library.xml`. The project defines no command-line flag of its own, and reads `VCPKG_ROOT` and `NUMBER_OF_PROCESSORS` from the environment at build time.
